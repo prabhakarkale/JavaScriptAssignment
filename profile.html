@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/profileStyle.css">
+        <script type="text/javascript" src="js/profile.js"></script>
+    </head>
+    <body onload="loads()">
+        <div class="nav-bar">
+            <img src="images/todo.jpg" class="iconDetails" alt="">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="todo.html">Todo</a></li>
+                <li><a href="login.html" onclick="logout()">Lagout</a></li>
+                <li><button type="button" class="icon-button" onclick="logout()">
+                    <span class="material-icons"></span>
+                    <span class="icon-button__badge" id="count-notification">9</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="userProfile">
+            <div id="Details">
+                <img id="pimg" class="profileImage">
+                <div class="form-details">
+                    <table>
+                        <tr>
+                            <td><label>Name</label></td>
+                            <td>:</td>
+                            <td><label id="fn"></label> <label id="ln"></label></td>
+                        </tr>
+                        <tr>
+                            <td><label>Email</label></td>
+                            <td>:</td>
+                            <td><label id="un"></label></td>
+                        </tr>
+                        <tr>
+                            <td><label>Gender </label></td>
+                            <td>:</td>
+                            <td><label id="gen"></label></td>
+                        </tr>
+                        <tr>
+                            <td><label>Address</label></td>
+                            <td>:</td>
+                            <td><label id="add"></label></td>
+                        </tr>
+                        <tr >
+                            <td colspan="3" align="center"><a class="margin-top: 30px;" href="editProfile.html">Edit Profile</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html> 

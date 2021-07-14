@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/loginStyle.css">
+        <script type="text/javascript" src="js/login.js"></script>
+        <style>
+            tr{
+                height: 50px;
+            }
+        </style>
+    </head>
+    <body>  
+        <div class="login-container">
+            <h1>Login Form</h1><br><br>
+            <table>
+                <tr>
+                    <td><label>UserName : </label></td>
+                    <td><input type="text" id="uname" onkeydown="clearMsg()"></td>
+                </tr>
+                <tr>
+                    <td><label>Password : </label></td>
+                    <td><input type="password" id="pwd" onkeydown="clearMsg()"></td>
+                </tr>
+                <tr style="height: 20px;">
+                    <td colspan="2"><label><span class="error" id="showError"></span></label></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><label><input type="button" id="btn-login" value="Login" onclick="checkLogin()"></label></td>
+                </tr>
+            </table>
+            
+            
+            <br>
+             <a href="registration.html" class="new-user">New User ?</a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title>Registration Page</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/registration.js"></script>
+    </head>
+    <body>
+
+        <h1>Registration Form</h1>
+        <div class="registration-form">
+            <form id="RegistrationForm">
+                <label>Email <span id="emailError" class="error"></span></label>        
+                <input type="text" id="email" onkeydown="clearMessage(this)">
+                <label>First Name <span id="fnameError" class="error"></span></label>   
+                <input type="text" id="fname" onkeydown="clearMessage(this)">
+                <label>Last Name <span id="lnameError" class="error"></span></label>   
+                <input type="text" id="lname" onkeydown="clearMessage(this)">
+
+                <label>Gender <span id="genderError" class="error"></span></label>
+                <label class="gender-radio">
+                    <table>
+                        <tr>
+                            <td><input type="radio" id="male" name="gender" value="male" onchange="clearMessage(this)"></td>
+                            <td><label class="genderRadioBtn" for="male">Male</label></td>
+                       
+                            <td><input type="radio" id="female" name="gender" value="female" onchange="clearMessage(this)"></td>
+                            <td><label class="genderRadioBtn" for="female">Female</label></td>
+                       
+                            <td><input type="radio" id="other" name="gender" value="other" onchange="clearMessage(this)"></td>
+                            <td><label class="genderRadioBtn" for="other">Other</label></td>
+                        </tr>
+                    </table>  
+                    </label>      
+
+                <label>Address <span id="addressError" class="error"></span></label>
+                <input type="text" id="address" onkeydown="clearMessage(this)">
+
+                <label>Password <span id="passwordError" class="error"></span></label>
+                    <input type="password" id="password" style="margin-bottom: 0px;" onkeydown="clearMessage(this)">
+                    <table>
+                        <tr><td><input type="checkbox" id="showPassword" style="width: 15px; height: 15px;" onclick="togglePassword()"></td>
+                            <td><label for="showPassword" class="genderRadioBtn">show Password</label></td></tr>
+                    </table>
+                    
+                <label>Confirm Password <span id="confirmPasswordError" class="error"></span></label>
+                    <input type="password" id="confirmPassword" onkeydown="clearMessage(this)">
+
+
+                <label>Profile image <span id="imgError" class="error"></span></label>
+                
+                <table>
+                    <tr>
+                        <td><img width="100px" height="100px" style="border:1px solid black;border-radius: 5px;" id="previewImage"></td>
+                        <td><input type="file" id="pimg" onchange="getImage();" onclick="hideError('imgError')" accept="image/*"></td>
+                    </tr>
+                </table>
+                
+                <input type="button" id="btninsert" value="submit" onclick="doRegistration()">
+                <input type="reset">
+            </form>
+            <b>Already have an account <a href="login.html">Login here...</b></a>
+        </div>
+    </body>
+</html>

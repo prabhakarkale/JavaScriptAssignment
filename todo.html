@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo</title>
+        <link rel="stylesheet" href="css/todo.css">
+        <script rel="text/javascript" src="js/todo.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     
+    </head>
+    <body onload="viewLoads()">
+        <!-- onload="viewLoads()" -->
+        <section class="nav-bar">
+            <img src="images/todo.jpg" alt="" class="iconDetails">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="login.html" onclick="logout()">Logout</a></li>
+            </ul>
+        </section>
+
+
+        <div class="main-body">
+            <div class="operations">
+                <button class="op-todo" onclick="createTodo()">Create-Todo</button>
+                <button class="op-todo" onclick="viewTodo()">View-Todo</button>
+                <button class="op-todo" onclick="updateTodo()">Update-Todo</button>
+                <button class="op-todo" onclick="deleteTodo()">Delete-Todo</button>
+                <!-- <button class="op-todo" onclick="sortTableShow()">Sort-Todo</button> -->
+                <select name="" id="filter-box" class="op-todo" onchange="byfilter(this)">
+                    <option value="select">Filter By</option>
+                    <option value="categories">Categories</option>
+                    <option value="isDone">IsDone Status</option>
+                    <option value="dateRange">Date Range</option>
+                    <option value="isPending">IsPending Status</option>
+                </select>
+                <select id="search-box" class="op-todo" onchange="bysearch(this)">
+                    <option value="select">Search By</option>
+                    <option value="tdate">Task Date</option>
+                    <option value="search-tname">Task Name</option>
+                </select>
+            </div>
+            <div id="display-area">
+                <div id="grp-filter">
+                    <select name="categories" id="cat" onchange="byCat()">
+                        <option value="select">Select</option>
+                        <option value="study">Study</option>
+                        <option value="sports">Sports</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div id="searchtodo">
+                    <label id="bytdate">
+                        <input type="date" id="datesearch" >
+                        <input type="button" value="Show" onclick="dateSearch()">
+                        <span id="dateSearchError" style="display: none;"></span>
+                    </label>
+                    <label id="bytname">
+                        <input type="text" onkeyup="searchName()" id="myInput" placeholder="Search for names.." title="Type in a name" style="margin-left: 300px;margin-top: 30px;height: 35px;width: 400px;">
+                        <span id="nameSearchError" style="display: none;"></span>
+                    </label>
+                </div>
+
+                <section id="createtodo">
+                    <h1>New TODO</h1>
+                    <form class="registration-form">
+                        <label>Name <span id="todo-nameErr" class="error"></span></label><input type="text" id="todoName">
+
+                        <label>Date <span id="cdateErr" class="error"></span></label><input type="date" id="cdate">
+
+                        <label>Categories <span id="catErr" class="error"></span></label>
+                            <input type="checkbox" id="study" name="study" value="study">study
+                            <input type="checkbox" id="sports" name="sports" value="sports">sports
+                            <input type="checkbox" id="other" name="other" value="other">other
+
+                        <label>isPublic <span id="publicErr" class="error"></span></label>
+                            <input type="radio" id="pyes" name="ispublic" value="yes" checked>Yes
+                            <input type="radio" id="pno" name="ispublic" value="no">No
+                        
+                            <label>Attach image <span id="imgErr" class="error"></span></label>
+                            <input type="file" id="addimg" onchange="getAddTodoImage()" accept="image/*">
+                                    <img id="previewimage" height="150px" width="150px" style="border: 2px solid black;border-radius: 5px;"><br><br>
+                        
+                            <label>Reminder <span id="remErr1" class="error"></span></label>
+
+                        <label for="cheYes">
+                                <input type="radio" id="chkYes" name="chkRem" onclick="showOrHideDiv()" >Yes
+                        </label>
+                        <label for="chkNo">
+                            <input type="radio" id="chkNo" name="chkRem" onclick="showOrHideDiv()" checked>No
+                        </label>
+
+                        <label id="RemDate">
+                            Reminder Date <span id="rdateErr" class="error"></span>
+                            <input type="date" id="rdate">
+                        </label>
+                        
+                        <label>
+                            <input type="button" id="btnadd-todo" value="submit" onclick="addTodo()">
+                            <input type="reset">
+                        </label>
+                    </form>
+                </section>
+                <section name="" id="viewtodo">
+                </section>
+                <section name="" id="deletetodo">
+                    <div id="deleteSpecificTodo">
+                        <table>
+                            <tr>
+                                    <td><select name="" id="chooseDeleteTodoName" class="chooseTodoName" style="display: block;"></select></td>
+                                    <td><input type="button" value="Delete" class="delete-all" onclick="deleteSelectedTodo()"><span id="delete-msg" class="error"></span></td>
+                            </tr> 
+                            
+                            <tr>
+                                <td align="center" colspan=2><input type="button" value="Delete-all" class="delete-all" style="margin-left:565px;" onclick="deleteAll()"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                </section>
+                <section id="updatetodo">
+                    <select name="" id="chooseTodoName" class="chooseTodoName" onchange="fillTodoData(this)">
+
+                    </select>
+                    <div id="updatetodoRecord">
+                        <form class="registration-form">
+                            <label>Task Name <span id="ctname_uErr" class="error"></span></label>
+                                <input type="text" id="ctnameu">
+                            <label>Date <span id="cdate_uErr" class="error"></span></label>
+                                <input type="date" id="cdateu">
+                            <label>Mark as done <span id="done_uErr" class="error"></span></label>
+                                <input type="radio" id="dyesu" name="isdone" value="yes">Yes
+                                <input type="radio" id="dnou" name="isdone" value="no">No
+                            <label>isPublic <span id="public_uErr" class="error"></span></label>
+                                <input type="radio" id="pyesu" name="ispublic" value="yes">Yes
+                                <input type="radio" id="pnou" name="ispublic" value="no">No
+
+                            <label>Attach image <span id="imgErr_uErr" class="error"></span></label>
+                                <img id="updatepreviewimage" height="150px" width="150px" style="border: 2px solid black;border-radius: 5px;"><br><br>
+                                <input type="file" id="updateimg" onchange="getImage();" accept="image/*">
+
+                            
+                            <label>Reminder <span id="rem-uErr" class="error" ></span></label>
+                            <label for="chkYes">
+                                <input type="radio" id="chYesu" name="chkRem" value="on" onclick="showOrHideDate()" checked>Yes 
+                            </label>
+                            <label for="chkNo">
+                                <input type="radio" id="chNou" name="chkRem" value="off" onclick="showOrHideDate()">No
+                            </label>
+                            <label id="RDate">Reminder Date <span id="rdate_uErr" class="error"><input type="date" id="rdateu"></span></label>
+                            <input type="button" id="btnadd-todo" value="submit" onclick="updateTodoData()">
+                            <input type="reset">
+                        </form>
+                    </div>
+                </section>
+                <div id="cat-list">
+                </div>
+                <div id="showCategory" style="display: none;">
+                    <table style="margin-top: 30px;">
+                        <tr>
+                            <td colspan="6" align="center" style="margin-left: 200px;"><label style="margin-left: 350px;font-size: 30px;"><b>Select Categorory</b></label></td>
+                        </tr>
+                        <tr>
+                    <td><input type="checkbox" id="chkShowCatStudy" style="width: 20px;height: 30px;margin-left: 200px;" onchange="loadCatWiseData()"></td><td><p>Study</p></td>
+                    <td><input type="checkbox" id="chkShowCatSports" style="width: 20px;height: 30px;margin-left: 200px;" onchange="loadCatWiseData()"></td><td><p>Sports</p></td>
+                    <td><input type="checkbox" id="chkShowCatOther" style="width: 20px;height: 30px;margin-left: 200px;" onchange="loadCatWiseData()"></td><td><p>Other</p></td>
+                </tr></table>
+                </div>
+                <div id="dateRangeDiv" style="display: none;">
+                    date from <input type="date" id="datefrom">
+                        date to <input type="date" id="dateto">
+                        <input type="button" value="Show" onclick="datetofrom()">
+                </div>
+                <div id="showdata" style="display: none;">
+                    <span id="showdataError" class="error"></span>
+                    <table id="showTabularData" border="2px" style="font-size: 20px;">
+
+                    </table>
+                    <button style="margin-left: 300px;margin-top: 30px;width: 150px;height:35px;border-radius: 5px;" onclick="DeleteCheckedTodo()">
+                        Delete Todo(s)
+                    </button>
+                </div>
+                <span id="commondError" style="display: none;"></span>
+            </div>
+        </div>
+    </body>
+</html>

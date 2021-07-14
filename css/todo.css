@@ -1,0 +1,225 @@
+body
+{
+    padding: 0px;
+    margin: 0px auto;
+    float: none;
+    background-color: #bbd4ec;
+}
+
+.tab{
+    border-style: solid;
+    border-width: thick;
+    width: 100%;
+}
+
+th, td{
+    border-top-left-radius: 1px solid black;
+}
+
+.nav-bar{
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    position: fixed;
+    max-width: 100%;
+    margin: 0px auto;
+}
+
+ul{
+    list-style-type: none;
+    overflow: hidden;
+    float: right;
+    padding-right: 30px;
+}
+
+li{
+    float: left;
+    margin-right: 16px;
+}
+
+li a{
+    display: block;
+    opacity: 1;
+    text-decoration: none;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 4px;
+    letter-spacing: 0.54px;
+}
+
+a:hover{
+    text-decoration: underline;
+    text-decoration-color: #fe8369;
+    text-decoration-style: solid 2px;
+}
+
+.iconDetails{
+    float: left;
+    height: 60px;
+    width: 120px;
+}
+
+.main-body{
+    padding-top: 110px;
+    padding-bottom: 80px;
+    float: left;
+    height: 10px;
+}
+
+#cat, #isdone, #datetofrom, #isPending, #createtodo, #deletetodo, #searchtodo, #bytname, #tdate
+{
+    display: none;
+}
+
+.registration-form
+{
+    margin: 0 auto;
+    width: 350px;
+    background-color: #ffffff40;
+    border-radius: 10px;
+    height: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    display: block;
+}
+
+.registration-form label{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    width: 100%;
+    display: inline-block;
+}
+
+.registration-form input{
+    width: 100%;
+    margin-bottom: 15px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    border-radius: 3px;
+}
+
+.gender-radio{
+    display: inline-block;
+    font-size: 15px;
+}
+
+.gender-radio input{
+    width: auto;
+}
+
+input[type=button], input[type=reset]
+{
+    width: 150px;
+    margin: 5px 5px 1px 5px;
+    height: 30px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background-color: #fe8369;
+}
+
+.error{
+    font-size: 12px;
+    color: red;
+    padding-left: 15px;
+}
+
+input[type=checkbox], input[type=radio]
+{
+    width: auto;
+}
+
+#RemDate{
+    visibility: hidden;
+}
+
+#updatetodoRecord{
+    display: none;
+}
+
+#grp-filter
+{
+    display: none;
+}
+
+#grp-filter input[type=select] input[type=button]
+{
+    width: 40%;
+}
+
+#cat-list
+{
+    margin-top: 20px;
+}
+
+#datetofrom input{
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+#isPending, #isdone, #cat{
+    height: 40px;
+    width: 100px;
+}
+
+.operations{
+    height: 50px;
+}
+
+.op-todo{
+    height: 40px;
+    border-radius: 10px;
+    width: 140px;
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: bisque;
+    color: chocolate;
+    border-style: none;
+}
+
+.operations{
+    background-color: darkgrey;
+    padding-top: 10px;
+    padding-left: 8px;
+}
+
+.delete-btn{
+    width: 20px;
+}
+
+#table5 th{
+    cursor: pointer;
+}
+
+.sort-arrow{
+    width: 30px;
+    height: 25px;
+    padding-left: 5px;
+}
+
+#delete-msmg{
+    width: 10px;
+    height: 25px;
+    font-size: 20px;
+}
+
+.chooseTodoName
+{
+    display: none;
+    width: 170px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 400px;
+}
+
+.delete-all
+{
+    margin-top:50px;
+    align-items: center;
+    margin-left: 420px;
+    height: 35px;
+    width: 100px;
+}

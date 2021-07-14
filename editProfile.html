@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css/editProfileStyle.css">
+        <script type="text/javascript" src="js/editProfile.js"></script>
+    </head>
+    <body onload="loadData()">
+        <section class="nav-bar">
+            <img src="images/todo.jpg" class="iconDetails" alt="">
+            <ul>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="todo.html">Todo</a></li>
+                <li><a href="login.html" onclick="logout()">Logout</a></li>
+                <li><button type="button" class="icon-button" onclick="logout()">
+                    <span class="material-icons"></span>
+                    <span class="icon-button__badge" id="count-notification">9</span>
+                    </button>
+                </li>
+            </ul>
+        </section>
+        <div class="registration-form">
+            <form>
+                <label>First Name <span id="fnameError" class="error"></span></label>
+                <input type="text" id="fname" onkeydown="clearMessage(this)">
+                <label>Last Name <span id="lnameError" class="error"></span></label>
+                <input type="text" id="lname" onkeydown="clearMessage(this)">
+                <label>Gender <span id="genderError" class="error"></span></label>
+                <label class="gender-radio">
+                    <table>
+                        <tr>
+                            <td><input type="radio" id="male" name="gender" value="male"></td>
+                            <td><label class="genderRadioBtn" for="male">Male</label></td>
+                       
+                            <td><input type="radio" id="female" name="gender" value="female"></td>
+                            <td><label class="genderRadioBtn" for="female">Female</label></td>
+                       
+                            <td><input type="radio" id="other" name="gender" value="other"></td>
+                            <td><label class="genderRadioBtn" for="other">Other</label></td>
+                        </tr>
+                    </table>  
+                </label>
+
+                <label>Address <span id="addressError" class="Error"></span></label>
+                <input type="text" id="address" onkeydown="clearMessage(this)">
+
+                <label>Profile Image <span id="imgError" class="error"></span></label>
+                    <img id="pic" width="120px" height="120px"><br><br>
+                    <input type="file" id="pimg" onchange="getImage();"  onclick="hideError('imgError')" accept="image/*">
+             
+                    <input type="button" id="btninsert" value="submit" onclick="editProfile()">
+                    <input type="reset">
+                <label></label>
+            </form>
+        </div>
+    </body>
+</html>
