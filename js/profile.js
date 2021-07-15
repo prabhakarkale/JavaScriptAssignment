@@ -5,11 +5,6 @@ let usertodo = JSON.parse(localStorage.getItem('user-todo'));
 let user = JSON.parse(localStorage.getItem('users'));
 let count = 0;
 
-function test()
-{
-    console.log(activeUser);
-}
-
 (function(){
     if(sessionStorage.getItem('activeUser') == undefined)
     {
@@ -34,12 +29,9 @@ function loads()
 
     for(i =0; i < user.length; i++)
     {
-        // alert(user[i].profileimg);
 
         if(user[i].email == activeUser.substring(1, activeUser.length-1))
         {
-            // alert("came is loads")
-
             document.getElementById("Details").style.display = "block";
             document.getElementById("pimg").src = user[i].profileimg;
             document.getElementById("fn").textContent = user[i].fname;

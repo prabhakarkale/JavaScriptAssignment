@@ -50,8 +50,6 @@ function checkAuthentication(user)
         return false;
     }
     else{
-        console.log(user)
-
         for(var i = 0; i < users.length; i++)
         {
             if(users[i].email == user.username && users[i].password == user.password)

@@ -9,7 +9,7 @@ let user = JSON.parse(localStorage.getItem("users"));
     }   
     else
     {
-        console.log("session working");
+        // console.log("session working");
     } 
     
 })();

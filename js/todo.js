@@ -18,7 +18,7 @@ var allUsers;
         }
     }
 
-    console.log(allUsers)
+    // console.log(allUsers)
 })();
 
 let res;
@@ -272,9 +272,7 @@ function updateSpecificTodo(element)
         document.getElementById('ctnameu').value = todo.tname;
         document.getElementById('ctnameu').value = todo.tname;
         document.getElementById('ctnameu').value = todo.tname;
-        
-        console.log(todo)
-
+    
     }
     else{
         document.getElementById('updatetodoRecord').style.display = 'none';
@@ -446,8 +444,6 @@ function byfilter(element){
             {
                 var todo = getTodoObject(users[userIndex].todo[j])
                 todoIsDone.push(todo);
-                console.log("print :"+todoIsDone[0].tname);
-                console.log("print :"+todoIsDone[0].cdate);
             }
         }
         if(todoIsDone.length){
@@ -510,7 +506,6 @@ function loadCatWiseData()
             if(allTodo[j].catStudy == study && allTodo[j].catSports == sports && allTodo[j].catOther == other)
             {
                 var todo = getTodoObject(allTodo[j])
-                console.log(allTodo[j])
                 todos.push(todo);
             }
         }
@@ -662,46 +657,6 @@ function getTodoObject(data)
     return todomodal;
 }
 
-function checkAllRecords(element)
-{
-    var allShownTodo = document.getElementsByName('chkRecord');
-    if(element.checked)
-    {
-        todoId.splice(0, todoId.length);
-        for(let i = 0; i < allShownTodo.length; i++)
-        {
-            allShownTodo[i].checked = true;
-            todoId.push(allShownTodo[i].id);
-        }
-        console.log(todoId)
-    }
-    else
-    {
-        for(let i = 0; i < allShownTodo.length; i++)
-        {
-            allShownTodo[i].checked = false;
-        }
-        todoId.splice(0, todoId.length);
-        console.log(todoId)
-
-    }
-}
-
-var todoId=[];
-function checkedRecord(element)
-{
-    if(document.getElementById(element.id).checked)
-    {
-        todoId.push(element.id)
-
-    }
-    else{
-        todoId.splice(todoId.indexOf(element.id),1);
-
-    }
-    console.log(todoId)
-    
-}
 
 function showTabularData(data, title)
 {   title = "have to intialize" 
@@ -746,7 +701,6 @@ function showTabularData(data, title)
 function changePendingStatus(element)
 {
     var toChangableTodo = allUsers[userIndex].todo;
-    console.log(toChangableTodo)
     toChangableTodo[element.id].isdone = true;
 
     localStorage.setItem('users', JSON.stringify(allUsers));

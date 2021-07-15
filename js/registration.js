@@ -59,7 +59,6 @@ function doRegistration()
 
         users.push(newUser);
         localStorage.setItem('users', JSON.stringify(users));
-        console.log(JSON.parse(localStorage.getItem('users')))
         alert("Registered Successfully!!")
        window.location = "login.html";
     }  
@@ -128,7 +127,6 @@ function isDataValid(newUser)
             {
                 if(users[i].email==newUser.email)
                 {
-                    console.log("retrived email : "+ users[i])  // change it after complete -------------------XXXXX----------------
                     document.getElementById("emailError").innerHTML = "*Email already exists...";
                     flag = false;
                 }
