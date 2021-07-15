@@ -116,8 +116,6 @@ input[type=button], input[type=reset]
     height: 30px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    color: white;
-    background-color: #fe8369;
 }
 
 .error{
@@ -222,4 +220,21 @@ input[type=checkbox], input[type=radio]
     margin-left: 420px;
     height: 35px;
     width: 100px;
+}
+
+.redButton
+{
+    width:95px;
+    padding:3px;
+    margin:3px;
+    background-color:#F1948A;
+    border-radius:7px;
+}
+.greenButton
+{
+    width:95px;
+    padding:3px;
+    margin:3px;
+    background-color:#82E0AA;
+    border-radius:7px;
 }

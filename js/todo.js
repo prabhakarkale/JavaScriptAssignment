@@ -111,11 +111,11 @@ function checkAddTodoValidation(newtodo){
 
     //reminder section
     if(document.getElementById('chkYes').checked){
-        newtodo.reminder = "Yes";
+        newtodo.reminder = true;
         newtodo.rdate = document.getElementById('rdate').value;
     }
     else if(document.getElementById('chkNo').checked){
-        newtodo.reminder = 'No';
+        newtodo.reminder = false;
         newtodo.rdate = 'NA';
     }
 
@@ -222,40 +222,19 @@ function viewLoads(){
 }
 
 // ---------------------------------------------------------- Update Todo --------------------------------------------------------
-//show table for updae record
-function updateTodo(){
-    //hide view todo table
-    document.getElementById('showdata').style.display = "none"   
-
-    hideAllElements();
-    let text = "";
-    var users = JSON.parse(localStorage.getItem('users'));
-    var todos = users[userIndex].todo;
-    text += `<option value="NA">Choose Todo</option>`;
-
-    for(let i = 0; i < todos.length; i++)
-    {
-        text += `<option value="${i}">${todos[i].tname}</option>`;
-    }
-    document.getElementById("chooseTodoName").innerHTML = text;
-    document.getElementById("chooseTodoName").style.display = "block";
-
-    document.getElementById('updatetodo').style.display = 'block';
-    document.getElementById('cat-list').style.display = 'block';
-    
-}
-
-function fillTodoData(index)
+function updateSpecificTodo(element)
 {
-
-
-    let users = JSON.parse(localStorage.getItem('users'));
-    if(index.value != "NA")
+     hideAllElements();
+     document.getElementById('updatetodo').style.display = 'block';
+     let users = JSON.parse(localStorage.getItem('users'));
+     var index = element.id;
+    if(index != "")
     {
         //displaying update form
         document.getElementById('updatetodoRecord').style.display = 'block';
 
-        var todo = users[userIndex].todo[index.value];
+        var todo = allUsers[userIndex].todo[index];
+        document.getElementById('todo_id').value = index;
         document.getElementById('ctnameu').value = todo.tname;
         document.getElementById('cdateu').value = todo.cdate;
         if(todo.isdone)
@@ -310,92 +289,147 @@ function showOrHideDate(){
 
 function updateTodoData()
 {
-    var todoIndex = document.getElementById('chooseTodoName').value;
+    var todoIndex = document.getElementById('todo_id').value;
     var todo = allUsers[userIndex].todo[todoIndex];
-    // var updateTodo = {
-    //     tname : 
+    var updateTodo = {
+        tname : document.getElementById("ctnameu").value,
+        cdate : document.getElementById('cdateu').value,
+        isdone : document.getElementById("dyesu").checked == true ? true : false,
+        ispublic : document.getElementById('pyesu').checked == true ? true : false,
+        todoimg : document.getElementById('updateimg').src,
+        reminder : document.getElementById('chYesu').checked == true ? true : false,
+        rdate : document.getElementById("chYesu").checked == true ? document.getElementById('rdateu').value : "NA"
+    };
+
+    if(isUpdateTodoValid(updateTodo))
+    {
+        todo.tname = updateTodo.tname;
+        todo.cdate = updateTodo.cdate;
+        todo.isdone = updateTodo.isdone;
+        todo.ispublic = updateTodo.ispublic;
+        todo.todoimg = updateTodo.todoimg;
+        todo.reminder = updateTodo.reminder;
+        todo.rdate = updateTodo.rdate;
+        localStorage.setItem('users',JSON.stringify(allUsers));
+        alert("Profile Updated Successfully....");
+        window.location = "todo.html";
+    }
+}
+
+function isUpdateTodoValid(demoTodo)
+{
+    var Todate = new Date();
+
+    var x = true;
+    
+    //todo name
+    if(demoTodo.tname == "" || demoTodo.tname ==null || demoTodo.tname == undefined){
+        document.getElementById('ctname_uErr').innerHTML = "Todo Name is mandatory";
+        x = false;
+    }
+    else{
+        document.getElementById('ctname_uErr').innerHTML = "";
+    }
+
+    //cdate 
+    if(new Date(demoTodo.cdate).getTime() <= Todate.getTime()){
+        document.getElementById('cdate_uErr').innerHTML = "*Invalid date";
+        x = false;
+    }
+    else if(demoTodo.cdate == null || demoTodo.cdate == ""){
+        document.getElementById('cdate_uErr').innerHTML = "date is mandatory";
+        x = false;
+    }
+    else{
+        document.getElementById('cdate_uErr').innerHTML = "";
+    }
+
+    //reminder section
+    if(document.getElementById('chYesu').checked){
+        demoTodo.reminder = true;
+        demoTodo.rdate = document.getElementById('rdateu').value;
+    }
+    else if(document.getElementById('chNou').checked == false){
+        demoTodo.reminder = false;
+        demoTodo.rdate = 'NA';
+    }
+
+    
+
+    if( document.getElementById('chYesu').checked == true && document.getElementById('rdateu').value == ""){
+        document.getElementById('rdateErr').innerHTML = "Reminder date is Mandatory";
+        x = false;
+    }
+    
+    else if((document.getElementById('chYesu').checked == true) && ((new Date(demoTodo.rdate).getTime() > new Date(demoTodo.cdate).getTime()))){
+        document.getElementById('rdate_uErr').innerHTML = "*invalid date";
+        x = false;
+    }
+    else if(new Date(demoTodo.rdate).getDay() < Todate.getDay())
+    {
+        document.getElementById('rdate_uErr').innerHTML = "*invalid date";
+        x = false;
+    }
+    else{
+        document.getElementById('rdate_uErr').innerHTML = "";
+    }
+
+
+    // if(demoTodo.catStudy == false && demoTodo.catSports == false && demoTodo.catOther == false){
+    
+    //     document.getElementById('catErr').innerHTML = "*Select Categories...";
+    //     x = false;
+    // }
+    // else{
+    //         document.getElementById('catErr').innerHTML = "";
     // }
 
-    todo.tname = document.getElementById('ctnameu').value;
-    todo.cdate = document.getElementById('cdateu').value;
-    todo.isdone = document.getElementById("dyesu").checked == true ? true : false;
-    todo.ispublic = document.getElementById('pyesu').checked == true ? true : false;
-    todo.todoimg = document.getElementById('updateimg').src;
-    todo.reminder = document.getElementById('chYesu').checked == true ? true : false;
-    todo.rdate = document.getElementById("chYesu").checked == true ? document.getElementById('rdateu').value : "NA";
-    alert("Profile Updated Successfully....");
-    console.log("profile updated")
+    if(demoTodo.todoimg == ""){
+        document.getElementById('imgErr_uErr').innerHTML = "attachment is mandatory";
+        x = false;
+    }
+    else{
+        document.getElementById('imgErr_uErr').innerHTML = "";
+    }
 
-    localStorage.setItem('users',JSON.stringify(users));
-    window.location = "todo.html";
+    if(x!=true){
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 //-------------------------------------------------------Delete Todo--------------------------------------------------------------------------------------
-//for delete element shows table
-function deleteTodo(){
-    hideAllElements();
-    document.getElementById('deletetodo').style.display= 'block';
-    document.getElementById('showdata').style.display = "none"
-
-    let text = "";
-    var users = JSON.parse(localStorage.getItem('users'));
-    var todos = users[userIndex].todo;
-    text += `<option value="NA">Choose Todo</option>`;
-
-    for(let i = 0; i < todos.length; i++)
-    {
-        text += `<option value="${i}">${todos[i].tname}</option>`;
-    }
-    document.getElementById("chooseDeleteTodoName").innerHTML = text;
-    
-}
-
-function deleteSelectedTodo()
-{
-    var index = document.getElementById('chooseDeleteTodoName').value;
-    var todos = allUsers[userIndex].todo;
-
-    var temp = todos[index].tname;
-    todos.splice(index, index);
-    alert("deleted : "+ temp)
-
-    localStorage.setItem('users', JSON.stringify(users));
-    viewTodo();
-
-}
-
 
 //perform delete operations
 function deleteAll(){
          var users = JSON.parse(localStorage.getItem('users'));
         var todos = users[userIndex].todo;
-        todos.splice(0, todos.length);
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("deleted all todos")
-
-        viewTodo();
-}
-
-
-//calling on delete todo(s) button 
-function DeleteCheckedTodo()
-{
-    // var allShownTodo = document.getElementsByName('chkRecord');
-    if(todoId.length)
-    {
-        var todos = allUsers[userIndex].todo;
-        for(let i = 0; i < todoId.length; i++)
-        {
-                todos.splice(todoId[i], 1);
-                console.log("check todoID length"+todoId);
+        if(todos.length >= 1){
+            todos.splice(0, todos.length);
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("deleted all todos")
+            viewTodo();
         }
-        localStorage.setItem('users', JSON.stringify(allUsers));
-        viewTodo();
-    }
-    else{
-        alert("Select Todo(s)");
-    }
+        else
+        {
+            alert("No Todo(s) Available...")
+        }
 }
+
+function deleteSpecificTodo(element)
+{
+    var index = element.id;
+    var todos = allUsers[userIndex].todo;
+
+    todos.splice(index, 1);
+
+    localStorage.setItem('users', JSON.stringify(allUsers));
+    viewTodo();
+
+}
+
 //-------------------------------------------------
 //shows input types for filter
 function byfilter(element){
@@ -421,6 +455,7 @@ function byfilter(element){
             document.getElementById('commondError').innerText = "";
         }
         else{
+            document.getElementById('showdata').style.display = "none"
             document.getElementById('commondError').innerHTML = "No Data Found..."
         }
     }
@@ -500,14 +535,16 @@ function datetofrom(){
                 todos.push(todo);
             }
         }
+        document.getElementById("dateRange_Error").style.display = "none";
+
         showTabularData(todos);
     }
     else
     {
-        document.getElementById('cat-list').innerHTML = "From Date should be Greater than to date";
+        document.getElementById("showdata").style.display = "none";
+        document.getElementById("dateRange_Error").style.display = "block";
+        document.getElementById('dateRange_Error').innerHTML = "From Date should be Greater than to date";
     }
-    document.getElementById('datefrom').value = '';
-    document.getElementById('dateto').value = '';
 }
 
 //--------------------------------------------------- Search By Data -------------------------------------------------------------------------------------------
@@ -671,7 +708,7 @@ function showTabularData(data, title)
     // console.log(title)
     document.getElementById('showdata').style.display = "block"
     var text= "";
-    text+=`<tr><th><input type="checkbox" id='main' onclick="checkAllRecords(this)"></th>`;
+    text+=`<tr>`;
         text+=`<th>Todo Name</th>`;
         text+=`<th>Todo Date</th>`;
         text+=`<th>Category</th>`;
@@ -685,7 +722,6 @@ function showTabularData(data, title)
     {
         var row = data[i];
         text+=`<tr>
-            <td><input type="checkbox" id='${i}' name="chkRecord" onclick="checkedRecord(this)"></td>
             <td>${row.tname}</td>
             <td>${row.cdate}</td>
             <td>${row.category}</td>
@@ -695,10 +731,12 @@ function showTabularData(data, title)
             <td>${row.isdone==true? 
                 "<i class='fa fa-check-square-o' aria-hidden='true' style='margin-left:20px;'></i>" 
                 : "<button id="+i+" onclick='changePendingStatus(this)'>Pending</button>"}</td>
-            <td>${row.reminder == 'Yes'? 
+            <td>${row.reminder == true? 
                 "<i class='fa fa-check-square-o' aria-hidden='true' style='margin-left:20px;'></i>" 
                 : "<i class='fa fa-times' aria-hidden='true' style='margin-left:25px;'></i>"}</td>
-            <td>${row.rdate == 'NA' ? "<i style='margin-left:40px;'>-</i>" : row.rdate }</td>`;
+            <td>${row.rdate == 'NA' ? "<i style='margin-left:40px;'>-</i>" : row.rdate }</td>
+            <td><button id='${i}' onclick="deleteSpecificTodo(this)" class="redButton">Delete</button>
+            <td><button id='${i}' onclick="updateSpecificTodo(this)" class="greenButton">Update</button>`;
 
         text+="</tr>"
     }
@@ -721,7 +759,6 @@ function hideAllElements(){
     document.getElementById('createtodo').style.display = 'none';
     document.getElementById('viewtodo').style.display = 'none';
     document.getElementById('updatetodo').style.display = 'none';
-    document.getElementById('deletetodo').style.display = 'none';
     document.getElementById('searchtodo').style.display = 'none';
     document.getElementById('cat-list').style.display = 'none';
     document.getElementById('showdata').style.display = "none";
@@ -743,311 +780,3 @@ function getImage() {
 function logout(){
     sessionStorage.removeItem('activeUser');
 }
-
-// //show table data
-// function tableShow(i){
-//     var text;
-//     let catArr = [];
-//     text="<td>"+usertodo[i].todoname + "</td>"
-//     text+="<td>"+usertodo[i].todoname + "</td>"
-//     if(usertodo[i].catStudy != undefined || usertodo.catStudy != ""){
-//         catArr.push(usertodo[i].catStudy);
-//     }
-//     if(usertodo[i].catSport != undefined || usertodo[i].catSport != ""){
-//         catArr.push(usertodo[i].catSport);
-//     }
-//     if(usertodo[i].catOther != undefined || usertodo[i].catOther != ""){
-//         catArr.push(usertodo[i].catOther);
-//     }
-//     text+="<td>"+catArr.toString() + "</td>"
-//     text+="<td>"+catArr[i].isdone + "</td>"
-//     text+="<td>"+catArr[i].ispublic + "</td>"
-//     text+="<td>"+catArr[i].reminder + "</td>"
-//     text+="<td>"+catArr[i].rdate + "</td>"
-//     text+="<td><img src ='"+catArr[i].todoimg + "' height='100px' width='150px'> </td>"
-//     return text;
-// }
-
-
-
-// //filtering data by category wise
-// function byCat()
-// {
-//     document.getElementById('cat-list').style.display = 'block';
-//     let cat = document.getElementById('cat')=value;
-//     if(cat == 'select')
-//     {
-//         viewLoads();
-//     }
-//     else{
-//         var i;
-//         var f = false;
-//         var text = "<table class='tab'><tr>,th>Task Name</th><th>ToDo Date</th><th>Category</th><th>Mark as Done</th><th>isPublic</th><th>Reminder</th><th>Reminder Date</th><th>Todo Image</th></tr>";
-
-//         for(i = 0; i < usertodo.length; i++)
-//         {
-//             if(usertodo[i].username == username)
-//             {
-//                 if(usertodo[i].catStudy == cat || usertodo[i].catSport == cat || usertodo[i].catOther == cat)
-//                 {
-//                     f = true;
-//                     text += "<tr>"+tableShow(i)+"</tr>";
-//                 }
-//             }
-//         }
-//         text+="</table>";
-//         if(f == true){
-//             document.getElementById('cat-list').innerHTML = text
-//         }
-//         else{
-//             document.getElementById('cat-list').innerHTML = "No Data Available";
-//         }
-//     }
-// }
-
-
-
-
-
-
-
-
-
-// //soters index of element to be update and display update form
-// function updateStoreIndex(index)
-// {
-//     document.getElementById('updaetodoRecord').style.display='block';
-//     document.getElementById('cat-list').style.display = 'none';
-//     sessionStorage.setItem('indexUpdate', index)
-//     document.getElementById('ctnameu').value = usertodo[index].todoname;
-//     document.getElementById('cdateu').value = usertodo[index].cdate;
-//     document.getElementById('uimg').src = usertodo[index].todoimg;
-
-//     if(usertodo[index].isdone == 'yes'){
-//         document.getElementById('dyesu').checked = true;
-//     }
-//     else{
-//         document.getElementById('dnou').checked = true;
-//     }
-//     if(usertodo[index].ispublic == 'yes'){
-//         document.getElementById('pyesu').checked = true;
-//     }
-//     else{
-//         document.getElementById('pnou').checked = true;
-//     }
-//     if(usertodo[index].reminder == 'Yes')
-//     {
-//         document.getElementById('chYesu').checked = true;
-//         RDate.style.visibility = 'visible';
-//         document.getElementById('rdateu').value = usertodo[index].rdate;
-//     }
-//     else
-//     {
-//         RDate.style.visibility = 'hidden';
-//         document.getElementById('chNou').checked = true;
-//     }
-// }
-
-// // showing or hiding reminder date for updateTodo
-// function ShowHideRDiv(){
-//     var chYes = document.getElementById('chYesu');
-//     var RDate = document.getElementById('RDate');
-//     RDate.style.visibility = chYes.checked? "visible" : "hidden";
-// }
-
-// //update todo operation perform
-// function updateRecord(){
-//     let index = sessionStorage.getItem('indexUpdate');
-//     let cdate, catSports, catStudy, catOther, done, reminder, rdate, ispublic, tid, tname;
-//     var x = true;
-//     tname = document.getElementById('ctnameu').value;
-//     tname = tname.trim();
-//     if(tname == "" || tname == null)
-//     {
-//         document.getElementById('ctname_uErr').innerHTML = "Name is mandatory";
-//         x = false;
-//     }
-//     else{
-//         document.getElementById('ctname_uErr').innerHTML = "";
-//     }
-//     if(document.getElementById('cdateu').value == "")
-//     {
-//         document.getElementById('cdate_uErr').innerHTML = "Date is mandatory";
-//         x = false;
-//     }
-//     else
-//     {
-//         cdate = document.getElementById('cdateu').value;
-//         document.getElementById('cdate_uErr').innerHTML = "";
-//     }
-//     if(document.getElementById('dyesu').checked){
-//         done = document.getElementById('dyesu').value;
-//     }
-//     else if(document.getElementById('dyesu').checked){
-//         done = document.getElementById('dnou').value;
-//     }
-//     else{
-//         document.getElementById('done_uErr').innerHTML = "Choose one option";
-//     }
-//     if(document.getElementById('pyesu').checked){
-//         ispublic = document.getElementById('pyesu').value;
-//         document.getElementById('public_uErr').innerHTML = "";
-//     }
-//     else if(document.getElementById('pnou').checked){
-//         ispublic = document.getElementById('pnou').value;
-//         document.getElementById('public_uErr').innerHTML = "";
-//     }
-//     else{
-//         document.getElementById('public_uErr').innerHTML = "choose one option";
-//     }
-
-//     if(document.getElementById('chYesu').checked){
-//         reminder = yes;
-//         rdate = document.getElementById('rdateu').value;
-//     }
-//     else if(document.getElementById('chNou').checked){
-//         reminder = 'No';
-//         rdate = null;
-//     }
-//     if(document.getElementById('chYesu').checked == false && document.getElementById('chNou').checked == false){
-//         document.getElementById('rem_uErr').innerHTML = "Choose one option";
-//     }
-//     if(document.getElementById('chYesu').checked == true && document.getElementById('rdateu').value == ""){
-//         document.getElementById('rdate_uErr').innerHTML = "Choose reminder date";
-//     }
-
-//     if(document.getElementById('uimg').src == "" && document.getElementById('toimg').isDefaultNamespace.length == 0){
-//         document.getElementById('img_uErr').innerHTML = "Image is mandatory";
-//     }
-//     else if(document.getElementById('uimg').src!=""){
-//         todoimg = usertodo[index].todoimg;
-//     }
-//     else if(document.getElementById('toimg').isDefaultNamespace.length == 1){
-//         todoimg = res;
-//     }
-
-//     catStudy = usertodo[index].catStudy;
-//     catSports = usertodo[index].catSports;
-//     catOther = usertodo[index].catOther;
-//     tid = usertodo[index].tid;
-//     if(x != true){
-//         return false;
-//     }
-//     else{
-//         usertodo[index].tid = tid;
-//         usertodo[index].todoname = tname;
-//         usertodo[index].cdate = cdate;
-//         usertodo[index].catStudy = catStudy;
-//         usertodo[index].catSports = catSports;
-//         usertodo[index].catOther = catOther;
-//         usertodo[index].isdone = done;
-//         usertodo[index].reminder = reminder;
-//         usertodo[index].rdate = rdate;
-//         usertodo[index].ispublic = ispublic;
-//         usertodo[index].todoimg  = todoimg;
-//         localStorage.setItem('user-todo', JSON.stringify(usertodo));
-//         location.reload();    
-//     }
-// }
-
-
-
-// // image to base 64
-// //---------------------------- ///  Use another functionn---------------------------
-// function encodeImageFileAsURL(element)
-// {
-//     let file = element.files[0];
-//     let reader = new FileReader();
-//     reader.onloadend = function(){
-//         res = reader.result;
-//         localStorage.setItem('imgbase64', res);
-//         reader,this.readAsDataURL(file);
-//     }
-// }
-
-
-
-// //sorting by table index nubmer
-
-// function sortTable(n){
-//     var table;
-//     console.log(n);
-//     console.log(document.getElementById("table5"));
-//     table = document.getElementById('table5');
-//     var raows, i, x, y, count = 0;
-//     var switching = true;
-
-//     // order is set as ascending
-//     var direction = "ascending";
-    
-//     //run loop until no switching is needed
-//     while(switching)
-//     {
-//         switching = false;
-//         var rorws = table.rows;
-
-//         //loop to go through all rows
-//         for(i = 1; i < (rows.length - 1); i++)
-//         {
-//             var Switch = false;
-
-//             x = rows[i].getElementsByTagName('td')[n];
-//             y = rows[i].getElementsByTagName('td')[n];
-
-//             if(direction == "ascending"){
-//                 if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()){
-//                     Switch = true;
-//                     break;
-//                 }
-//             }
-//             else if(direct == 'descending'){
-//                 if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()){
-//                     Switch = true;
-//                     break;
-//                 }
-//             }
-//         }
-//         if(Switch){
-//             rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-//             switching = true;
-//             count++;
-//         }
-//         else{
-//             if(count == 0 && direction == 'ascending'){
-//                 direction = 'descending';
-//                 switching = true;
-//             }
-//         }
-//     }
-// }
-
-// //show sort in table
-// function sortTableShow()
-// {
-//     hideAllElements();
-//     document.getElementById('cat-list').style.display = 'block';
-//     var i;
-//     var f = false;
-//     var text = "<table class='tab' id='table5'>";
-//     text +="<tr><th onclick='sortTable(0)'>Task Name<img src='Images/arrow.png' class='sort-arrow'></img></th>";
-//     text +="<th onclick='sortTable(1)'>Todo date<img src='Images/arrow.png' class='sort-arrow'></img></th>";
-//     text +="<th onclick='sortTable(2)'>Category<img src='Images/arrow.png' class='sort-arrow'></img></th>";
-//     text +="<th onclick='sortTable(3)'>Marks as done<img src='Images/arrow.png' class='sort-arrow'></img></th>"
-//     text +="<th onclick='sortTable(4)'>isPublic <img src='Images/arrow.png' class='sort-arrow'></img></th>"
-//     text +="<th onclick='sortTable(5)'>Reminder<img src='Images/arrow.png' class='sort-arrow'></img></th>"
-//     text +="<th onclick='sortTable(6)'>Reminder date<img src='Images/arrow.png' class='sort-arrow'></img></th>"
-//     text +="<th>Todo Image<img src='Images/arrow.png' class='sort-arrow'></img></th></tr>";
-
-//     for(i = 0; i < usertodo.length; i++)
-//     {
-//         f = true;
-//         text+="<tr>"+ tableShow(i)+"</tr>";
-//     }
-//     text+="</table>";
-//     if(f == true){
-//         document.getElementById('cat-list').innerHTML = text;
-//     }
-//     else{
-//         document.getElementById('cat-list').innerHTML = "No data Available"
-//     }
-// }

@@ -4,7 +4,6 @@
         <title>Todo</title>
         <link rel="stylesheet" href="css/todo.css">
         <script rel="text/javascript" src="js/todo.js"></script>
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      
@@ -25,8 +24,6 @@
             <div class="operations">
                 <button class="op-todo" onclick="createTodo()">Create-Todo</button>
                 <button class="op-todo" onclick="viewTodo()">View-Todo</button>
-                <button class="op-todo" onclick="updateTodo()">Update-Todo</button>
-                <button class="op-todo" onclick="deleteTodo()">Delete-Todo</button>
                 <!-- <button class="op-todo" onclick="sortTableShow()">Sort-Todo</button> -->
                 <select name="" id="filter-box" class="op-todo" onchange="byfilter(this)">
                     <option value="select">Filter By</option>
@@ -53,7 +50,7 @@
                 <div id="searchtodo">
                     <label id="bytdate">
                         <input type="date" id="datesearch" >
-                        <input type="button" value="Show" onclick="dateSearch()">
+                        <input type="button" value="Show" class="greenButton" onclick="dateSearch()">
                         <span id="dateSearchError" style="display: none;"></span>
                     </label>
                     <label id="bytname">
@@ -97,27 +94,12 @@
                         </label>
                         
                         <label>
-                            <input type="button" id="btnadd-todo" value="submit" onclick="addTodo()">
-                            <input type="reset">
+                            <input type="button" id="btnadd-todo" value="submit" class="greenButton" onclick="addTodo()">
+                            <input type="reset" class="redButton">
                         </label>
                     </form>
                 </section>
                 <section name="" id="viewtodo">
-                </section>
-                <section name="" id="deletetodo">
-                    <div id="deleteSpecificTodo">
-                        <table>
-                            <tr>
-                                    <td><select name="" id="chooseDeleteTodoName" class="chooseTodoName" style="display: block;"></select></td>
-                                    <td><input type="button" value="Delete" class="delete-all" onclick="deleteSelectedTodo()"><span id="delete-msg" class="error"></span></td>
-                            </tr> 
-                            
-                            <tr>
-                                <td align="center" colspan=2><input type="button" value="Delete-all" class="delete-all" style="margin-left:565px;" onclick="deleteAll()"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    
                 </section>
                 <section id="updatetodo">
                     <select name="" id="chooseTodoName" class="chooseTodoName" onchange="fillTodoData(this)">
@@ -125,6 +107,7 @@
                     </select>
                     <div id="updatetodoRecord">
                         <form class="registration-form">
+                            <input type="hidden" id="todo_id">
                             <label>Task Name <span id="ctname_uErr" class="error"></span></label>
                                 <input type="text" id="ctnameu">
                             <label>Date <span id="cdate_uErr" class="error"></span></label>
@@ -143,14 +126,14 @@
                             
                             <label>Reminder <span id="rem-uErr" class="error" ></span></label>
                             <label for="chkYes">
-                                <input type="radio" id="chYesu" name="chkRem" value="on" onclick="showOrHideDate()" checked>Yes 
+                                <input type="radio" id="chYesu" name="chkRem" value="on" onclick="showOrHideDate()">Yes 
                             </label>
                             <label for="chkNo">
                                 <input type="radio" id="chNou" name="chkRem" value="off" onclick="showOrHideDate()">No
                             </label>
                             <label id="RDate">Reminder Date <span id="rdate_uErr" class="error"><input type="date" id="rdateu"></span></label>
-                            <input type="button" id="btnadd-todo" value="submit" onclick="updateTodoData()">
-                            <input type="reset">
+                            <input type="button" id="btnadd-todo" value="submit" class="greenButton" onclick="updateTodoData()">
+                            <input type="reset" class="redButton">
                         </form>
                     </div>
                 </section>
@@ -170,14 +153,15 @@
                 <div id="dateRangeDiv" style="display: none;">
                     date from <input type="date" id="datefrom">
                         date to <input type="date" id="dateto">
-                        <input type="button" value="Show" onclick="datetofrom()">
+                        <input type="button" value="Show" class="greenButton" onclick="datetofrom()">
+                        <span id="dateRange_Error" style="display: none;" style="font-size: 35px;"></span>
                 </div>
                 <div id="showdata" style="display: none;">
                     <span id="showdataError" class="error"></span>
                     <table id="showTabularData" border="2px" style="font-size: 20px;">
 
                     </table>
-                    <button style="margin-left: 300px;margin-top: 30px;width: 150px;height:35px;border-radius: 5px;" onclick="DeleteCheckedTodo()">
+                    <button style="margin-left: 300px;margin-top: 30px;width: 150px;height:35px;border-radius: 5px;" class="redButton" onclick="deleteAll()">
                         Delete Todo(s)
                     </button>
                 </div>

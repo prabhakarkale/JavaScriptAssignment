@@ -111,8 +111,6 @@ input[type=button], input[type=reset]
     height: 30px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    color: white;
-    background-color: #fe8369;
 }
 
 .error

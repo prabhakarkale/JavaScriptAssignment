@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/editProfileStyle.css">
+        <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="js/editProfile.js"></script>
     </head>
     <body onload="loadData()">
@@ -46,8 +47,8 @@
                     <img id="pic" width="120px" height="120px"><br><br>
                     <input type="file" id="pimg" onchange="getImage();"  onclick="hideError('imgError')" accept="image/*">
              
-                    <input type="button" id="btninsert" value="submit" onclick="editProfile()">
-                    <input type="reset">
+                    <input type="button" id="btninsert" value="submit" onclick="editProfile()" class="redButton">
+                    <input type="reset" class="greenButton">
                 <label></label>
             </form>
         </div>
